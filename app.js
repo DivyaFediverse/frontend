@@ -4,14 +4,46 @@ function Form() {
   // State variables to store the form values
   const [email, setEmail] = useState("");
   const [location, setLocation] = useState("");
+  const [image, setImage] = useState('');                   // +++++++++++++++++++
   const [familyMembers, setFamilyMembers] = useState(0);
   const [testResult, setTestResult] = useState("");
   const [description, setDescription] = useState("");
 
+  
+  const handleLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLocation(position.coords.latitude + ',' + position.coords.longitude);
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+    } else {
+      console.error('Geolocation is not supported by this browser.');
+    }
+  };
+
+
+
+  const handleImage = () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.capture = 'camera';
+    input.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      // Do something with the image file, such as display it or send it to an API
+      setImage(file);
+    });
+    input.click();
+  };
+  
+  
   // Function to handle form submission
   const handleSubmit = (event) => {
     event.preventDefault();
-
     // Form validation and submission logic goes here
   }
 
@@ -35,10 +67,25 @@ function Form() {
         onChange={(event) => setLocation(event.target.value)}
         readOnly
       />
-      <button onClick={() => navigator.geolocation.getCurrentPosition(setLocation)}>
+      <button onClick={handleLocation}>
         Get current location
       </button>
       <br />
+
+      <label htmlFor="image">Image:</label>
+      <input
+        type="image"
+        id="image"
+        value={image}
+        onChange={(event) => setLocation(event.target.value)}
+        readOnly
+      />
+      <button onClick={handleImage}>
+        Get Image
+      </button>
+      <br />
+
+
 
       <label htmlFor="familyMembers">Number of family members:</label>
       <input
