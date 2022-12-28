@@ -10,20 +10,20 @@ function Form() {
   const [description, setDescription] = useState("");
 
   
-  const handleLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLocation(position.coords.latitude + ',' + position.coords.longitude);
-        },
-        (error) => {
-          console.error(error);
-        }
-      );
-    } else {
-      console.error('Geolocation is not supported by this browser.');
-    }
-  };
+  // const handleLocation = () => {
+  //   if (navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition(
+  //       (position) => {
+  //         setLocation(position.coords.latitude + ',' + position.coords.longitude);
+  //       },
+  //       (error) => {
+  //         console.error(error);
+  //       }
+  //     );
+  //   } else {
+  //     console.error('Geolocation is not supported by this browser.');
+  //   }
+  // };
 
 
 
@@ -31,7 +31,7 @@ function Form() {
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/*';
-    input.capture = 'camera';
+    input.capture = 'environment';
     input.addEventListener('change', (event) => {
       const file = event.target.files[0];
       // Do something with the image file, such as display it or send it to an API
@@ -61,24 +61,24 @@ function Form() {
       {/* Use the browser's geolocation API to get the current location */}
       <label htmlFor="location">Location:</label>
       <input
-        type="text"
+        type="number"
         id="location"
         value={location}
         onChange={(event) => setLocation(event.target.value)}
-        readOnly
+        // readOnly
       />
-      <button onClick={handleLocation}>
+      {/* <button onClick={handleLocation}>
         Get current location
-      </button>
+      </button> */}
       <br />
 
       <label htmlFor="image">Image:</label>
       <input
-        type="image"
-        id="image"
-        value={image}
+        accept="image"
+        id="icon-button-file"
+        type="file"
+        capture="environment"
         onChange={(event) => setLocation(event.target.value)}
-        readOnly
       />
       <button onClick={handleImage}>
         Get Image
